@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; margin: 20px; }
+header { background: #333; color: white; padding: 10px; }
+nav ul { list-style: none; padding: 0; }
+nav ul li { display: inline; margin-right: 10px; }
+form { margin: 20px 0; }
+button { margin-top: 10px; }
