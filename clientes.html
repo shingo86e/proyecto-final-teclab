@@ -10,11 +10,15 @@
 <body>
     <header><h1>Clientes</h1></header>
     <main>
-        <form id="formCliente">
-            <label>Nombre: <input type="text" id="nombre" required></label><br>
-            <label>Email: <input type="email" id="email"></label><br>
-            <label>Teléfono: <input type="text" id="telefono"></label><br>
-            <button type="submit">Guardar Cliente</button>
+        <form id="form-cliente">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
+            
+            <button type="submit">Registrar</button>
+            <a href="index.html" class="cancelar">Cancelar</a>
         </form>
         <h2>Listado de Clientes</h2>
         <ul id="listaClientes"></ul>
