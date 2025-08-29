@@ -44,7 +44,14 @@ function actualizarListaProductos() {
     productos.forEach(producto => {
         const fila = document.createElement('tr');
 
-        // Crear celdas para cada propiedad del producto
+        // Crear celda para el checkbox
+        const celdaCheckbox = document.createElement('td');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.dataset.id = producto.id; // Asignar el ID del producto al checkbox
+        celdaCheckbox.appendChild(checkbox);
+
+        // Crear celdas para las propiedades del producto
         const celdaId = document.createElement('td');
         celdaId.textContent = producto.id;
 
@@ -58,6 +65,7 @@ function actualizarListaProductos() {
         celdaStock.textContent = producto.stock;
 
         // Agregar las celdas a la fila
+        fila.appendChild(celdaCheckbox);
         fila.appendChild(celdaId);
         fila.appendChild(celdaNombre);
         fila.appendChild(celdaPrecio);
@@ -77,6 +85,27 @@ document.getElementById('buscarProducto').addEventListener('click', function() {
         alert(`Producto encontrado:\nID: ${productoEncontrado.id}\nNombre: ${productoEncontrado.nombre}\nPrecio: $${productoEncontrado.precio}\nStock: ${productoEncontrado.stock}`);
     } else {
         alert('Producto no encontrado.');
+    }
+});
+
+// Lógica para eliminar productos seleccionados
+document.getElementById('eliminarProducto').addEventListener('click', function() {
+    const checkboxes = document.querySelectorAll('#tablaProductos tbody input[type="checkbox"]:checked');
+    const idsAEliminar = Array.from(checkboxes).map(checkbox => parseInt(checkbox.dataset.id));
+
+    if (idsAEliminar.length > 0) {
+        // Filtrar los productos que no están seleccionados
+        productos = productos.filter(producto => !idsAEliminar.includes(producto.id));
+
+        // Guardar los cambios en Local Storage
+        localStorage.setItem('productos', JSON.stringify(productos));
+
+        // Actualizar la tabla
+        actualizarListaProductos();
+
+        alert('Productos eliminados correctamente.');
+    } else {
+        alert('Por favor, selecciona al menos un producto para eliminar.');
     }
 });
 
