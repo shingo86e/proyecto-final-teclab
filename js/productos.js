@@ -38,13 +38,33 @@ document.getElementById('formProducto').addEventListener('submit', function(even
 });
 
 function actualizarListaProductos() {
-    const lista = document.getElementById('listaProductos');
-    lista.innerHTML = ''; // Limpiar la lista
+    const tablaBody = document.querySelector('#tablaProductos tbody');
+    tablaBody.innerHTML = ''; // Limpiar las filas de la tabla
 
     productos.forEach(producto => {
-        const li = document.createElement('li');
-        li.textContent = `ID: ${producto.id} - ${producto.nombre} - Precio: $${producto.precio} - Stock: ${producto.stock}`;
-        lista.appendChild(li);
+        const fila = document.createElement('tr');
+
+        // Crear celdas para cada propiedad del producto
+        const celdaId = document.createElement('td');
+        celdaId.textContent = producto.id;
+
+        const celdaNombre = document.createElement('td');
+        celdaNombre.textContent = producto.nombre;
+
+        const celdaPrecio = document.createElement('td');
+        celdaPrecio.textContent = `$${producto.precio.toFixed(2)}`;
+
+        const celdaStock = document.createElement('td');
+        celdaStock.textContent = producto.stock;
+
+        // Agregar las celdas a la fila
+        fila.appendChild(celdaId);
+        fila.appendChild(celdaNombre);
+        fila.appendChild(celdaPrecio);
+        fila.appendChild(celdaStock);
+
+        // Agregar la fila al cuerpo de la tabla
+        tablaBody.appendChild(fila);
     });
 }
 
