@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Facturas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/facturas.js"></script>
+</head>
+<body>
+    <header><h1>Facturas</h1></header>
+    <main>
+        <form id="formFactura">
+            <label>Cliente: <input type="text" id="cliente" required></label><br>
+            <label>Producto: <input type="text" id="producto" required></label><br>
+            <label>Cantidad: <input type="number" id="cantidad" required></label><br>
+            <button type="submit">Generar Factura</button>
+        </form>
+        <h2>Listado de Facturas</h2>
+        <ul id="listaFacturas"></ul>
+    </main>
+</body>
+</html>

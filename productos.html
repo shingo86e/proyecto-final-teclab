@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/productos.js"></script>
+</head>
+<body>
+    <header><h1>Productos</h1></header>
+    <main>
+        <form id="formProducto">
+            <label>Nombre: <input type="text" id="nombre" required></label><br>
+            <label>Precio: <input type="number" id="precio" required></label><br>
+            <label>Stock: <input type="number" id="stock"></label><br>
+            <button type="submit">Guardar Producto</button>
+        </form>
+        <h2>Listado de Productos</h2>
+        <ul id="listaProductos"></ul>
+    </main>
+</body>
+</html>
