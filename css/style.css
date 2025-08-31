@@ -8,7 +8,13 @@ body {
     font-family: Arial, sans-serif;
 }
 
-header { background: #333; color: white; padding: 10px; width: 30%; margin: 0; }
+header {
+    background: rgba(51, 51, 51, 0.8); /* Color negro con 80% de opacidad */
+    color: white;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+}
 nav ul { list-style: none; padding: 0; }
 nav ul li { display: inline; margin-right: 10px; }
 form { margin: 20px 0; }
@@ -30,4 +36,13 @@ a.cancelar_eliminar, button.cancelar_eliminar {
 
 a.cancelar_eliminar:hover, button.cancelar_eliminar:hover {
     background-color: #d32f2f; /* Color más oscuro al pasar el mouse */
+}
+
+nav ul li a {
+    color: white; /* Cambia el color del texto a blanco */
+    text-decoration: none; /* Opcional: elimina el subrayado */
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Opcional: agrega subrayado al pasar el mouse */
 }
