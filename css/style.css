@@ -12,12 +12,31 @@ body {
 }
 
 header {
-    background: rgba(51, 51, 51, 0.8); /* Color negro con 80% de opacidad */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo negro translúcido */
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     width: 100%;
     margin: 0;
 }
+
+header.bg-dark {
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Forzar el fondo translúcido */
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    margin: 0;
+}
+
+header h1 {
+    text-align: left;
+    margin: 0;
+    font-size: 1.8rem; /* Ajustar el tamaño del texto si es necesario */
+}
+
+nav {
+    margin-top: 10px; /* Separar el menú del título */
+}
+
 nav ul { list-style: none; padding: 0; }
 nav ul li { display: inline; margin-right: 10px; }
 form { margin: 20px 0; }
