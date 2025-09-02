@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nombre": "Alimento para perros raza 15k",
+    "precio": 20000,
+    "stock": 20
+  },
+  {
+    "id": 2,
+    "nombre": "Alimento para gatos Wiskas 15k",
+    "precio": 35000,
+    "stock": 15
+  }
+]
