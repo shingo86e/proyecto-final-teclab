@@ -6,6 +6,26 @@
     <title>Gestión de Productos</title>
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/productos.js"></script>
+<<<<<<< HEAD
+=======
+    <style>
+        #tablaProductos, #tablaProductos th, #tablaProductos td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #tablaProductos {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        #mensajeSinResultados {
+            display: none;
+            font-weight: bold;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+>>>>>>> e3a438b (eliminación de boton buscar, buscar con un solo dato y filtrado automático)
 </head>
 <body>
     <header><h1>Gestión de Productos</h1></header>
@@ -24,7 +44,9 @@
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
         </form>
 
-        <button id="buscarProducto">Buscar Producto</button>
+        <h2>Filtrar Productos</h2>
+        <label for="buscarProductoInput">Buscar:</label>
+        <input type="text" id="buscarProductoInput" placeholder="Ingrese texto para buscar">
 
         <h2>Listado de Productos</h2>
         <table id="tablaProductos" border="1">
@@ -38,10 +60,15 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Las filas de productos se agregaran dinamicamente aquí -->
+                <!-- Las filas de productos se agregan dinámicamente -->
             </tbody>
         </table>
+
+        <p id="mensajeSinResultados">No se encontraron productos que coincidan con la búsqueda.</p>
+
         <button id="eliminarProducto" class="cancelar_eliminar">Eliminar Producto</button>
     </main>
+
+    <script src="js/productos.js"></script>
 </body>
 </html>
