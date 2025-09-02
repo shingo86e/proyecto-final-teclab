@@ -48,6 +48,9 @@ function actualizarListaProductos() {
             <td>${producto.nombre}</td>
             <td>${producto.precio}</td>
             <td>${producto.stock}</td>
+            <td>
+                ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" style="width: 50px; height: 50px;">` : 'Sin imagen'}
+            </td>
         `;
         tablaBody.appendChild(fila);
     });
@@ -64,24 +67,43 @@ document.getElementById('formProducto').addEventListener('submit', async functio
     const nombre = document.getElementById('nombreProducto').value.trim();
     const precio = parseFloat(document.getElementById('precioProducto').value);
     const stock = parseInt(document.getElementById('stockProducto').value) || 0;
+    const imagenInput = document.getElementById('imagenProducto');
+    let imagenBase64 = '';
 
-    if (nombre && !isNaN(precio)) {
-        const nuevoProducto = {
-            id: idActual,
-            nombre: nombre,
-            precio: precio,
-            stock: stock
-        };
-
-        productos.push(nuevoProducto);
-        idActual++;
-        actualizarListaProductos();
-        await guardarProductosEnServidor(); // Guardar en el servidor
-        document.getElementById('formProducto').reset();
-    } else {
+    // Validar campos obligatorios
+    if (!nombre || isNaN(precio) || isNaN(stock)) {
         alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
+
+    // Convertir la imagen a Base64 si se cargó
+    if (imagenInput.files && imagenInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagenBase64 = e.target.result;
+            guardarProducto(nombre, precio, stock, imagenBase64);
+        };
+        reader.readAsDataURL(imagenInput.files[0]);
+    } else {
+        guardarProducto(nombre, precio, stock, imagenBase64);
     }
 });
+
+async function guardarProducto(nombre, precio, stock, imagenBase64) {
+    const nuevoProducto = {
+        id: idActual,
+        nombre: nombre,
+        precio: precio,
+        stock: stock,
+        imagen: imagenBase64
+    };
+
+    productos.push(nuevoProducto);
+    idActual++;
+    actualizarListaProductos();
+    await guardarProductosEnServidor(); // Guardar en el servidor
+    document.getElementById('formProducto').reset();
+}
 
 // Evento para eliminar productos seleccionados
 document.getElementById('eliminarProducto').addEventListener('click', async function() {

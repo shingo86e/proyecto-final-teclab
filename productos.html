@@ -18,7 +18,10 @@
             <input type="number" id="precioProducto" required><br>
 
             <label for="stockProducto">Stock:</label>
-            <input type="number" id="stockProducto"><br>
+            <input type="number" id="stockProducto" required><br>
+
+            <label for="imagenProducto">Imagen del Producto:</label>
+            <input type="file" id="imagenProducto" accept="image/*"><br>
 
             <button type="submit">Guardar Producto</button>
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
@@ -37,6 +40,7 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Stock</th>
+                    <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +52,6 @@
 
         <button id="eliminarProducto" class="cancelar_eliminar">Eliminar Producto</button>
     </main>
-
     <script src="js/productos.js"></script>
 </body>
 </html>
