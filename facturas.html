@@ -11,23 +11,73 @@
     <header><h1>Facturas</h1></header>
     <main>
         <form id="formFactura">
-            <label>Cliente: <input type="text" id="cliente" required></label><br>
-            <label>Producto: <input type="text" id="producto" required></label><br>
-            <label>Cantidad: <input type="number" id="cantidad" required></label><br>
+            <h2>Datos del Cliente</h2>
+            <label for="nombreCliente">Nombre:</label>
+            <input type="text" id="nombreCliente" autocomplete="off" required><br>
+            <label for="apellidoCliente">Apellido:</label>
+            <input type="text" id="apellidoCliente" autocomplete="off" required><br>
+            <label for="celularCliente">Celular (opcional):</label>
+            <input type="text" id="celularCliente" autocomplete="off"><br>
+
+            <h3>Seleccionar cliente existente</h3>
+            <input type="text" id="buscarCliente" placeholder="Buscar cliente por nombre..." autocomplete="off">
+            <table id="tablaClientesFactura" class="tabla-productos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas de clientes dinámicas -->
+                </tbody>
+            </table>
+
+            <h2>Productos</h2>
+            <label for="buscarProducto">Buscar producto:</label>
+            <input type="text" id="buscarProducto" placeholder="Ingrese nombre de producto..." autocomplete="off">
+            <table id="tablaProductosFactura" class="tabla-productos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas de productos dinámicas -->
+                </tbody>
+            </table>
+
+            <h3>Detalle de venta</h3>
+            <div id="detalleVenta">
+                <!-- Productos seleccionados y cantidad -->
+            </div>
+
             <button type="submit">Generar Factura</button>
-        </form>
-        <h2>Listado de Facturas</h2>
-        <ul id="listaFacturas"></ul>
-        <form id="form-cliente">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
-            
-            <button type="submit">Registrar</button>
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
         </form>
+
+        <h2>Listado de Facturas</h2>
+        <table id="tablaFacturas" class="tabla-productos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Productos</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas de facturas dinámicas -->
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

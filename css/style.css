@@ -82,3 +82,23 @@ nav ul li a {
 nav ul li a:hover {
     text-decoration: underline; /* Opcional: agrega subrayado al pasar el mouse */
 }
+
+/* Estilos para la tabla de productos */
+.tabla-productos {
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.7); /* Fondo blanco opaco */
+}
+.tabla-productos th, .tabla-productos td {
+    border: 1px solid #333;
+    padding: 8px;
+}
+
+.tabla-productos img {
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #fff;
+    display: block;
+    margin: 0 auto;
+    max-width: 60px;
+    max-height: 60px;
+}

@@ -10,18 +10,40 @@
 <body>
     <header><h1>Clientes</h1></header>
     <main>
-        <form id="form-cliente">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
-            
+        <form id="formCliente">
+            <label for="nombreCliente">Nombre:</label>
+            <input type="text" id="nombreCliente" required><br>
+
+            <label for="apellidoCliente">Apellido:</label>
+            <input type="text" id="apellidoCliente" required><br>
+
+            <label for="celularCliente">Celular de contacto (opcional):</label>
+            <input type="text" id="celularCliente"><br>
+
             <button type="submit">Registrar</button>
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
         </form>
+
+        <h2>Filtrar Clientes</h2>
+        <label for="buscarClienteInput">Buscar:</label>
+        <input type="text" id="buscarClienteInput" placeholder="Ingrese texto para buscar">
+
         <h2>Listado de Clientes</h2>
-        <ul id="listaClientes"></ul>
+        <table id="tablaClientes" class="tabla-productos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Celular</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas de clientes se agregan dinámicamente -->
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

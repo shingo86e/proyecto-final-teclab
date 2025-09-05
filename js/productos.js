@@ -7,15 +7,29 @@ document.getElementById('formProducto').addEventListener('submit', function(even
     const nombre = document.getElementById('nombreProducto').value.trim();
     const precio = parseFloat(document.getElementById('precioProducto').value);
     const stock = parseInt(document.getElementById('stockProducto').value) || 0;
+    const imagenInput = document.getElementById('imagenProducto');
+    let imagen = '';
+    if (imagenInput.files && imagenInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagen = e.target.result;
+            guardarProducto(nombre, precio, stock, imagen);
+        };
+        reader.readAsDataURL(imagenInput.files[0]);
+        return;
+    }
+    guardarProducto(nombre, precio, stock, imagen);
+});
 
+function guardarProducto(nombre, precio, stock, imagen) {
     if (nombre && !isNaN(precio)) {
         const nuevoProducto = {
             id: idActual,
             nombre: nombre,
             precio: precio,
-            stock: stock
+            stock: stock,
+            imagen: imagen
         };
-
         productos.push(nuevoProducto);
         localStorage.setItem('productos', JSON.stringify(productos));
         idActual++;
@@ -24,7 +38,9 @@ document.getElementById('formProducto').addEventListener('submit', function(even
     } else {
         alert('Por favor, completa todos los campos obligatorios.');
     }
-});
+}
+
+// ...el resto del código ya está correcto...
 
 function actualizarListaProductos() {
     const tablaBody = document.querySelector('#tablaProductos tbody');
@@ -42,6 +58,16 @@ function actualizarListaProductos() {
         const celdaId = document.createElement('td');
         celdaId.textContent = producto.id;
 
+        const celdaImagen = document.createElement('td');
+        if (producto.imagen) {
+            const img = document.createElement('img');
+            img.src = producto.imagen;
+            img.alt = producto.nombre;
+            celdaImagen.appendChild(img);
+        } else {
+            celdaImagen.textContent = 'Sin imagen';
+        }
+
         const celdaNombre = document.createElement('td');
         celdaNombre.textContent = producto.nombre;
 
@@ -53,6 +79,7 @@ function actualizarListaProductos() {
 
         fila.appendChild(celdaCheckbox);
         fila.appendChild(celdaId);
+        fila.appendChild(celdaImagen);
         fila.appendChild(celdaNombre);
         fila.appendChild(celdaPrecio);
         fila.appendChild(celdaStock);
