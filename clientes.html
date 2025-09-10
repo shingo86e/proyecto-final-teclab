@@ -5,23 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Clientes</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+            authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+            projectId: "forrajeriaelsol-44bd0",
+            storageBucket: "forrajeriaelsol-44bd0.appspot.com",
+            messagingSenderId: "312220116385",
+            appId: "1:312220116385:web:42170d02c25545998f97e0",
+            measurementId: "G-TSXDP7G1WD"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
     <script defer src="js/clientes.js"></script>
 </head>
 <body>
-    <header><h1>Clientes</h1></header>
+    <header>
+        <h1 style="display: inline-block; vertical-align: middle;">Clientes</h1>
+        <a href="index.html" title="Inicio" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </a>
+    </header>
     <main>
-        <form id="form-cliente">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
-            
-            <button type="submit">Registrar</button>
+        <form id="formCliente">
+            <label for="nombreCliente">Nombre:</label>
+            <input type="text" id="nombreCliente" required><br>
+
+            <label for="apellidoCliente">Apellido:</label>
+            <input type="text" id="apellidoCliente" required><br>
+
+            <label for="celularCliente">Celular de contacto:</label>
+            <input type="text" id="celularCliente" required><br>
+
+            <button type="submit" id="btnRegistrarCliente" class="btn-registrar">Registrar</button>
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
         </form>
         <h2>Listado de Clientes</h2>
-        <ul id="listaClientes"></ul>
+        <table id="tablaClientes" border="1">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Celular</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas de clientes se agregan dinámicamente -->
+            </tbody>
+        </table>
+        <button type="button" id="btnEditarCliente" class="btn-editar">Editar</button>
+        <button type="button" id="btnEliminarCliente" class="cancelar_eliminar">Eliminar</button>
+        <div id="notificacionCliente" class="notificacion-centrada" style="display:none;"></div>
     </main>
 </body>
 </html>

@@ -5,10 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Productos</title>
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="js/productos.js"></script>
+            <!-- Firebase App (the core Firebase SDK) -->
+            <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+            <!-- Firebase Firestore -->
+            <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+            <script>
+                // Configuración de Firebase
+                const firebaseConfig = {
+                    apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+                    authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+                    projectId: "forrajeriaelsol-44bd0",
+                storageBucket: "forrajeriaelsol-44bd0.appspot.com",
+                    messagingSenderId: "312220116385",
+                    appId: "1:312220116385:web:42170d02c25545998f97e0",
+                    measurementId: "G-TSXDP7G1WD"
+                };
+                firebase.initializeApp(firebaseConfig);
+                const db = firebase.firestore();
+            </script>
+            <script defer src="js/productos.js"></script>
 </head>
 <body>
-    <header><h1>Gestión de Productos</h1></header>
+    <header>
+        <h1 style="display: inline-block; vertical-align: middle;">Gestión de Productos</h1>
+        <a href="index.html" title="Inicio" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </a>
+    </header>
     <main>
         <form id="formProducto">
             <label for="nombreProducto">Nombre del Producto:</label>
@@ -20,7 +45,7 @@
             <label for="stockProducto">Stock:</label>
             <input type="number" id="stockProducto"><br>
 
-            <button type="submit">Guardar Producto</button>
+            <button type="submit" id="btnRegistrar" class="btn-registrar">Registrar</button>
             <a href="index.html" class="cancelar_eliminar">Cancelar</a>
         </form>
 
@@ -33,7 +58,6 @@
             <thead>
                 <tr>
                     <th>Seleccionar</th>
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Stock</th>
@@ -46,9 +70,11 @@
 
         <p id="mensajeSinResultados">No se encontraron productos que coincidan con la búsqueda.</p>
 
-        <button id="eliminarProducto" class="cancelar_eliminar">Eliminar Producto</button>
+    <button id="eliminarProducto" class="cancelar_eliminar">Eliminar Producto</button>
+    <button type="button" id="editarProducto" class="btn-editar">Editar Producto</button>
+    <div id="notificacion" class="notificacion-centrada" style="display:none;"></div>
     </main>
 
-    <script src="js/productos.js"></script>
+    <!-- Script productos.js ya está incluido en el head -->
 </body>
 </html>
