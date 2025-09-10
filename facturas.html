@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Facturas</title>
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="js/facturas.js"></script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+            authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+            projectId: "forrajeriaelsol-44bd0",
+            storageBucket: "forrajeriaelsol-44bd0.appspot.com",
+            messagingSenderId: "312220116385",
+            appId: "1:312220116385:web:42170d02c25545998f97e0",
+            measurementId: "G-TSXDP7G1WD"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 </head>
 <body>
     <header>
@@ -17,24 +34,102 @@
         </a>
     </header>
     <main>
-        <form id="formFactura">
-            <label>Cliente: <input type="text" id="cliente" required></label><br>
-            <label>Producto: <input type="text" id="producto" required></label><br>
-            <label>Cantidad: <input type="number" id="cantidad" required></label><br>
-            <button type="submit">Generar Factura</button>
-        </form>
-        <h2>Listado de Facturas</h2>
-        <ul id="listaFacturas"></ul>
-        <form id="form-cliente">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
-            
-            <button type="submit">Registrar</button>
-            <a href="index.html" class="cancelar_eliminar">Cancelar</a>
-        </form>
+    <!-- Formularios antiguos eliminados, solo estructura moderna -->
+        <section id="clientes-section">
+            <h2>Clientes</h2>
+            <input type="text" id="busqueda-cliente" placeholder="Buscar cliente...">
+            <table id="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Clientes cargados dinámicamente -->
+                </tbody>
+            </table>
+            <button id="btn-nuevo-cliente">Agregar nuevo cliente</button>
+            <div id="form-nuevo-cliente" style="display:none;">
+                <h3>Nuevo Cliente</h3>
+                <form id="form-nuevo-cliente-form">
+                    <input type="text" id="nuevo-nombre" placeholder="Nombre" required>
+                    <input type="text" id="nuevo-apellido" placeholder="Apellido" required>
+                    <input type="text" id="nuevo-celular" placeholder="Celular" required>
+                    <button type="submit" id="guardar-cliente">Guardar</button>
+                    <button type="button" id="cancelar-cliente">Cancelar</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="productos-section">
+            <h2>Productos</h2>
+            <input type="text" id="busqueda-producto" placeholder="Buscar producto...">
+            <table id="tabla-productos">
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Productos cargados dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="carrito-section">
+            <h2>Carrito de Compra</h2>
+            <table id="tabla-carrito">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Quitar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Productos seleccionados dinámicamente -->
+                </tbody>
+            </table>
+            <div>
+                <strong>Total: $<span id="carrito-total">0.00</span></strong>
+            </div>
+        </section>
+
+        <section id="factura-section">
+            <h2>Crear Factura</h2>
+            <!-- La fecha se registra automáticamente -->
+            <button id="guardar-factura">Guardar Factura</button>
+            <div id="mensaje-factura"></div>
+        </section>
+
+        <section id="facturas-list-section">
+            <h2>Facturas Guardadas</h2>
+            <input type="text" id="busqueda-factura-cliente" placeholder="Buscar por cliente...">
+            <table id="tabla-facturas">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Productos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Facturas cargadas dinámicamente -->
+                </tbody>
+            </table>
+        </section>
     </main>
+    <script src="js/facturas.js"></script>
 </body>
 </html>
