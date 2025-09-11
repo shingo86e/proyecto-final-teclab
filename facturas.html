@@ -35,9 +35,10 @@
     </header>
     <main>
     <!-- Formularios antiguos eliminados, solo estructura moderna -->
+    <div id="notificacionFactura" class="notificacion-centrada" style="display:none;"></div>
         <section id="clientes-section">
             <h2>Clientes</h2>
-            <input type="text" id="busqueda-cliente" placeholder="Buscar cliente...">
+            <input type="text" id="busqueda-cliente" placeholder="Buscar cliente..." style="width: 300px; height: 30px; font-size: 1em;">
             <table id="tabla-clientes">
                 <thead>
                     <tr>
@@ -51,22 +52,23 @@
                     <!-- Clientes cargados dinámicamente -->
                 </tbody>
             </table>
-            <button id="btn-nuevo-cliente">Agregar nuevo cliente</button>
+            <button id="btn-nuevo-cliente" class="btn-registrar">Agregar nuevo cliente</button>
+            <button type="button" id="btn-cancelar-nuevo-cliente" class="cancelar_eliminar">Cancelar</button>
             <div id="form-nuevo-cliente" style="display:none;">
                 <h3>Nuevo Cliente</h3>
                 <form id="form-nuevo-cliente-form">
-                    <input type="text" id="nuevo-nombre" placeholder="Nombre" required>
-                    <input type="text" id="nuevo-apellido" placeholder="Apellido" required>
-                    <input type="text" id="nuevo-celular" placeholder="Celular" required>
-                    <button type="submit" id="guardar-cliente">Guardar</button>
-                    <button type="button" id="cancelar-cliente">Cancelar</button>
+                    <input type="text" id="nuevo-nombre" placeholder="Nombre" required style="height:30px; font-size:1em;">
+                    <input type="text" id="nuevo-apellido" placeholder="Apellido" required style="height:30px; font-size:1em;">
+                    <input type="text" id="nuevo-celular" placeholder="Celular" required style="height:30px; font-size:1em;" maxlength="10" pattern="\d{10}" inputmode="numeric" oninvalid="this.setCustomValidity('Debe contener 10 dígitos')" oninput="this.setCustomValidity('')">
+                    <button type="submit" id="guardar-cliente" class="btn-registrar">Guardar</button>
+                    <button type="button" id="cancelar-cliente" class="cancelar_eliminar">Cancelar</button>
                 </form>
             </div>
         </section>
 
         <section id="productos-section">
             <h2>Productos</h2>
-            <input type="text" id="busqueda-producto" placeholder="Buscar producto...">
+            <input type="text" id="busqueda-producto" placeholder="Buscar producto..." style="width: 300px; height: 30px; font-size: 1em;">
             <table id="tabla-productos">
                 <thead>
                     <tr>
@@ -108,13 +110,14 @@
         <section id="factura-section">
             <h2>Crear Factura</h2>
             <!-- La fecha se registra automáticamente -->
-            <button id="guardar-factura">Guardar Factura</button>
+            <button id="guardar-factura" class="btn-registrar">Guardar Factura</button>
+            <button type="button" id="btn-cancelar-factura" class="cancelar_eliminar">Cancelar</button>
             <div id="mensaje-factura"></div>
         </section>
 
         <section id="facturas-list-section">
             <h2>Facturas Guardadas</h2>
-            <input type="text" id="busqueda-factura-cliente" placeholder="Buscar por cliente...">
+            <input type="text" id="busqueda-factura-cliente" placeholder="Buscar por cliente..." style="width: 300px; height: 30px; font-size: 1em;">
             <table id="tabla-facturas">
                 <thead>
                     <tr>

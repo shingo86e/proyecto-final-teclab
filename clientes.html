@@ -27,7 +27,9 @@
 </head>
 <body>
     <header>
-        <h1 style="display: inline-block; vertical-align: middle;">Clientes</h1>
+        <h1 style="display: inline-block; vertical-align: middle;">Clientes
+        </h1>
+    </h1>
         <a href="index.html" title="Inicio" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -46,9 +48,10 @@
             <input type="text" id="celularCliente" required><br>
 
             <button type="submit" id="btnRegistrarCliente" class="btn-registrar">Registrar</button>
-            <a href="index.html" class="cancelar_eliminar">Cancelar</a>
+            <button type="button" id="btnCancelarCliente" class="cancelar_eliminar">Cancelar</button>
         </form>
         <h2>Listado de Clientes</h2>
+    <input type="text" id="busquedaCliente" placeholder="Buscar cliente..." style="width: 300px; height: 38px; font-size: 1.2em;">
         <table id="tablaClientes" border="1">
             <thead>
                 <tr>

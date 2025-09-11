@@ -1,3 +1,43 @@
+// Búsqueda dinámica de clientes
+document.getElementById('busquedaCliente').addEventListener('input', function() {
+    const filtro = this.value.trim().toLowerCase();
+    const tablaBody = document.querySelector('#tablaClientes tbody');
+    tablaBody.innerHTML = '';
+    clientes.forEach(cliente => {
+        const nombreCompleto = `${cliente.nombre || ''} ${cliente.apellido || ''}`;
+        if (
+            nombreCompleto.toLowerCase().includes(filtro) ||
+            (cliente.celular || '').toLowerCase().includes(filtro)
+        ) {
+            const fila = document.createElement('tr');
+            const celdaCheckbox = document.createElement('td');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.dataset.id = cliente.id;
+            celdaCheckbox.appendChild(checkbox);
+            const celdaNombre = document.createElement('td');
+            celdaNombre.textContent = cliente.nombre || '';
+            const celdaApellido = document.createElement('td');
+            celdaApellido.textContent = cliente.apellido || '';
+            const celdaCelular = document.createElement('td');
+            celdaCelular.textContent = cliente.celular || '';
+            fila.appendChild(celdaCheckbox);
+            fila.appendChild(celdaNombre);
+            fila.appendChild(celdaApellido);
+            fila.appendChild(celdaCelular);
+            tablaBody.appendChild(fila);
+        }
+    });
+});
+// Botón cancelar: limpia los campos del formulario y la búsqueda
+document.getElementById('btnCancelarCliente').addEventListener('click', function() {
+    document.getElementById('formCliente').reset();
+    // Si tienes un campo de búsqueda, límpialo aquí (ajusta el id si es necesario)
+    const busqueda = document.getElementById('busquedaCliente');
+    if (busqueda) busqueda.value = '';
+    clienteEditandoId = null;
+    limpiarSeleccionCheckboxes && limpiarSeleccionCheckboxes();
+});
 // Usar la instancia global de Firestore creada en el HTML
 let clientes = [];
 let clienteEditandoId = null;

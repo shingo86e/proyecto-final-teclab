@@ -1,3 +1,12 @@
+// Botón cancelar: limpia los campos del formulario y la búsqueda
+document.getElementById('btnCancelarProducto').addEventListener('click', function() {
+    document.getElementById('formProducto').reset();
+    document.getElementById('buscarProductoInput').value = '';
+    productoEditandoId = null;
+    // Limpiar selección de checkboxes
+    const checkboxes = document.querySelectorAll('#tablaProductos tbody input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.checked = false);
+});
 // Referencia a Firestore (ya declarada en el HTML)
 
 let productos = [];

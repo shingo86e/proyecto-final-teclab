@@ -152,6 +152,10 @@ function actualizarCarrito() {
 // Eventos
 // ==============================
 window.addEventListener('DOMContentLoaded', () => {
+    // Solo permitir ingreso de números en el campo celular
+    document.getElementById('nuevo-celular').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
     cargarFacturas();
     cargarClientes();
     cargarProductos();
@@ -175,12 +179,27 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cancelar-cliente').addEventListener('click', () => {
         document.getElementById('form-nuevo-cliente').style.display = 'none';
     });
+    // Botón cancelar al lado de 'Agregar nuevo cliente'
+    document.getElementById('btn-cancelar-nuevo-cliente').addEventListener('click', () => {
+        document.getElementById('form-nuevo-cliente').style.display = 'none';
+        document.getElementById('nuevo-nombre').value = '';
+        document.getElementById('nuevo-apellido').value = '';
+        document.getElementById('nuevo-celular').value = '';
+        document.getElementById('busqueda-cliente').value = '';
+        document.querySelectorAll('#tabla-clientes tbody input[type="radio"]').forEach(cb => cb.checked = false);
+        clienteSeleccionado = null;
+        mostrarClientes('');
+    });
     document.getElementById('form-nuevo-cliente-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const nombre = document.getElementById('nuevo-nombre').value.trim();
         const apellido = document.getElementById('nuevo-apellido').value.trim();
-        const celular = document.getElementById('nuevo-celular').value.trim();
-        if (nombre && apellido && celular) {
+            const celular = document.getElementById('nuevo-celular').value.trim();
+            if (!/^\d{10}$/.test(celular)) {
+                mostrarNotificacion('El celular debe tener exactamente 10 dígitos numéricos.');
+                return;
+            }
+            if (nombre && apellido && celular) {
             await db.collection('clientes').add({ nombre, apellido, celular });
             document.getElementById('form-nuevo-cliente').style.display = 'none';
             document.getElementById('nuevo-nombre').value = '';
@@ -244,6 +263,19 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Botón cancelar al lado de 'Guardar Factura'
+    document.getElementById('btn-cancelar-factura').addEventListener('click', () => {
+        // Limpiar selección de cliente
+        document.querySelectorAll('#tabla-clientes tbody input[type="radio"]').forEach(cb => cb.checked = false);
+        clienteSeleccionado = null;
+        // Limpiar selección de productos
+        document.querySelectorAll('#tabla-productos tbody input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.querySelectorAll('#tabla-productos tbody input.cantidad-producto').forEach(input => input.value = 1);
+        carrito = [];
+        actualizarCarrito();
+        // Limpiar mensajes
+        document.getElementById('mensaje-factura').textContent = '';
+    });
     // Guardar factura
     document.getElementById('guardar-factura').addEventListener('click', async function() {
         if (!clienteSeleccionado) {
