@@ -61,7 +61,7 @@ body {
     background-image: url('../imagenes/logo_forrajeria.jpg');
     background-size: cover; 
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
