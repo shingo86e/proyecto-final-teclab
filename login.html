@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gestión de Ventas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="container mt-5">
+        <h2>Iniciar sesión</h2>
+        <form id="login-form">
+            <input type="email" id="email" name="email" placeholder="Email" required style="height:30px; font-size:1em;"><br>
+            <input type="password" id="password" name="password" placeholder="Contraseña" required style="height:30px; font-size:1em;"><br>
+            <button type="submit" class="btn-registrar">Ingresar</button>
+        </form>
+        <div id="mensaje" class="notificacion-centrada" style="display:none;"></div>
+    </main>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+        authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+        projectId: "forrajeriaelsol-44bd0"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const signInForm = document.querySelector("#login-form");
+    const mensaje = document.getElementById("mensaje");
+    signInForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = signInForm["email"].value;
+      const password = signInForm["password"].value;
+      if (!email || !password) {
+        mensaje.textContent = "Por favor, complete todos los campos.";
+        mensaje.style.display = "block";
+        mensaje.style.background = "#f44336";
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        mensaje.textContent = "Inicio de sesión exitoso";
+        mensaje.style.display = "block";
+        mensaje.style.background = "#43a047";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1200);
+      } catch (error) {
+        mensaje.textContent = "Error: " + error.message;
+        mensaje.style.display = "block";
+        mensaje.style.background = "#f44336";
+      }
+      setTimeout(() => {
+        mensaje.style.display = "none";
+      }, 2500);
+    });
+    </script>
+</body>
+</html>
