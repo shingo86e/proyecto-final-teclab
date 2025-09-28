@@ -147,23 +147,40 @@ nav ul li { display: inline; margin-right: 10px; }
 form { margin: 20px 0; }
 button { margin-top: 10px; }
 
-body a.cancelar_eliminar, body button.cancelar_eliminar {
+body a.cancelar, body button.cancelar {
     display: inline-block;
     padding: 8px 16px !important;
     margin-left: 10px;
-    background-color: #f44336 !important; /* Color rojo */
+    background-color: #9e98a0 !important; /* Gris para cancelar */
     color: white !important;
     text-decoration: none;
-    border: none !important; /* Eliminar bordes predeterminados de botones */
-    border-radius: 4px !important; /* Bordes redondeados */
+    border: none !important;
+    border-radius: 4px !important;
     font-size: 1em !important;
     text-align: center;
-    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    cursor: pointer;
     font-weight: bold;
 }
+body a.cancelar:hover, body button.cancelar:hover {
+    background-color: #757575 !important;
+}
 
-body a.cancelar_eliminar:hover, body button.cancelar_eliminar:hover {
-    background-color: #860909 !important; /* Color más oscuro al pasar el mouse */
+body a.eliminar, body button.eliminar {
+    display: inline-block;
+    padding: 8px 16px !important;
+    margin-left: 10px;
+    background-color: #f44336 !important; /* Rojo para eliminar */
+    color: white !important;
+    text-decoration: none;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 1em !important;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+body a.eliminar:hover, body button.eliminar:hover {
+    background-color: #860909 !important;
 }
 
 nav ul li a {

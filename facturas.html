@@ -64,7 +64,7 @@
                 </tbody>
             </table>
             <button id="btn-nuevo-cliente" class="btn-registrar">Agregar nuevo cliente</button>
-            <button type="button" id="btn-cancelar-nuevo-cliente" class="cancelar_eliminar">Cancelar</button>
+            <button type="button" id="btn-cancelar-nuevo-cliente" class="cancelar">Limpiar</button>
             <div id="form-nuevo-cliente" style="display:none;">
                 <h3>Nuevo Cliente</h3>
                 <form id="form-nuevo-cliente-form">
@@ -72,7 +72,7 @@
                     <input type="text" id="nuevo-apellido" placeholder="Apellido" required style="height:30px; font-size:1em;">
                     <input type="text" id="nuevo-celular" placeholder="Celular" required style="height:30px; font-size:1em;" maxlength="10" pattern="\d{10}" inputmode="numeric" oninvalid="this.setCustomValidity('Debe contener 10 dígitos')" oninput="this.setCustomValidity('')">
                     <button type="submit" id="guardar-cliente" class="btn-registrar">Guardar</button>
-                    <button type="button" id="cancelar-cliente" class="cancelar_eliminar">Cancelar</button>
+                    <button type="button" id="cancelar-cliente" class="cancelar">Limpiar</button>
                 </form>
             </div>
         </section>
@@ -122,7 +122,7 @@
             <h2>Crear Factura</h2>
             <!-- La fecha se registra automáticamente -->
             <button id="guardar-factura" class="btn-registrar">Guardar Factura</button>
-            <button type="button" id="btn-cancelar-factura" class="cancelar_eliminar">Cancelar</button>
+            <button type="button" id="btn-cancelar-factura" class="cancelar">Limpiar</button>
             <div id="mensaje-factura"></div>
         </section>
 
