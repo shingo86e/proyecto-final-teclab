@@ -35,8 +35,9 @@
     font-weight: bold;
 }
 #btnRegistrar:hover, .btn-registrar:hover {
-    background: #388e3c !important;
+    background: #176b1b !important;
 }
+/* icono de guardar */
 #btnRegistrar::after, .btn-registrar::after {
     content: '';
     display: inline-block;
@@ -59,8 +60,9 @@
     font-weight: bold;
 }
 #editarProducto:hover, .btn-editar:hover {
-    background: #1565c0 !important;
+    background: #0a4b94 !important;
 }
+/* icono de editar */
 #editarProducto::after, .btn-editar::after {
     content: '';
     display: inline-block;
@@ -85,8 +87,9 @@ table th, table td {
 table th {
     background: rgba(0,0,0,0.15);
 }
+
 /* filepath: d:\TECLAB\trabajo final\gestion-ventas\css\style.css */
-/* filepath: d:\TECLAB\trabajo final\gestion-ventas\css\style.css */
+
 body {
     background-image: url('../imagenes/logo_forrajeria.jpg');
     background-size: cover; 
@@ -172,7 +175,7 @@ body a.cancelar, body button.cancelar {
     display: inline-block;
     padding: 8px 16px !important;
     margin-left: 10px;
-    background-color: #93769c !important; /* Gris para cancelar */
+    background-color: #593664 !important; /* morado para cancelar */
     color: white !important;
     text-decoration: none;
     border: none !important;
@@ -183,7 +186,7 @@ body a.cancelar, body button.cancelar {
     font-weight: bold;
 }
 body a.cancelar:hover, body button.cancelar:hover {
-    background-color: #5f396b !important;
+    background-color: #4f1f5e !important;
 }
 
 body a.cancelar::after, body button.cancelar::after {
@@ -232,4 +235,11 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline; /* Opcional: agrega subrayado al pasar el mouse */
+}
+
+a[title="Inicio"] svg {
+    transition: filter 0.2s;
+}
+a[title="Inicio"]:hover svg {
+    filter: brightness(2);
 }
