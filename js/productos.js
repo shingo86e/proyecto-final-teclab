@@ -87,7 +87,14 @@ function mostrarNotificacion(mensaje) {
 function actualizarListaProductos() {
     const tablaBody = document.querySelector('#tablaProductos tbody');
     tablaBody.innerHTML = '';
-    productos.forEach(producto => {
+    // Ordenar productos por stock ascendente (menor a mayor)
+    const productosOrdenados = productos.slice().sort((a, b) => {
+        const sa = parseInt(a.stock) || 0;
+        const sb = parseInt(b.stock) || 0;
+        return sa - sb;
+    });
+
+    productosOrdenados.forEach(producto => {
         const fila = document.createElement('tr');
 
         const celdaCheckbox = document.createElement('td');
@@ -109,10 +116,32 @@ function actualizarListaProductos() {
     if (stock === undefined || stock === null || isNaN(stock)) stock = 0;
     celdaStock.textContent = stock;
 
-        fila.appendChild(celdaCheckbox);
-        fila.appendChild(celdaNombre);
-        fila.appendChild(celdaPrecio);
-        fila.appendChild(celdaStock);
+    // Columna de alerta: mostrar icono si stock < 5
+    const celdaAlerta = document.createElement('td');
+    celdaAlerta.classList.add('celda-alerta');
+    const stockNum = parseInt(stock) || 0;
+    if (stockNum < 5) {
+        // SVG inline para icono de alerta (triángulo con signo de exclamación)
+        celdaAlerta.innerHTML = `
+            <span class="icon-alerta" title="Bajo stock" role="img" aria-label="Bajo stock">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path d="M1 21h22L12 2 1 21z" fill="#d32f2f"></path>
+                    <rect x="11" y="10" width="2" height="5" fill="#fff"></rect>
+                    <circle cx="12" cy="17" r="1" fill="#fff"></circle>
+                </svg>
+            </span>
+        `;
+        celdaAlerta.classList.add('has-alert');
+    } else {
+        celdaAlerta.textContent = '';
+        celdaAlerta.classList.remove('has-alert');
+    }
+
+    fila.appendChild(celdaCheckbox);
+    fila.appendChild(celdaNombre);
+    fila.appendChild(celdaPrecio);
+    fila.appendChild(celdaStock);
+    fila.appendChild(celdaAlerta);
 
         tablaBody.appendChild(fila);
     });
@@ -120,6 +149,38 @@ function actualizarListaProductos() {
     // Aplicar filtro si hay texto en el input
     const filtro = document.getElementById('buscarProductoInput').value.toLowerCase();
     filtrarProductos(filtro);
+    // Actualizar tabla de bajo stock cada vez que cambiamos la lista
+    actualizarTablaBajoStock();
+}
+
+// Actualiza la tabla lateral con productos con stock menor a 5
+function actualizarTablaBajoStock() {
+    const tbody = document.querySelector('#tablaBajoStock tbody');
+    if (!tbody) return; // si la página no tiene la tabla, salir
+    tbody.innerHTML = '';
+    const bajos = productos.filter(p => {
+        const stock = parseInt(p.stock) || 0;
+        return stock < 5;
+    });
+    if (bajos.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 2;
+        td.textContent = 'No hay productos con bajo stock.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+    }
+    bajos.forEach(p => {
+        const tr = document.createElement('tr');
+        const tdNombre = document.createElement('td');
+        tdNombre.textContent = p.nombre || '';
+        const tdStock = document.createElement('td');
+        tdStock.textContent = (isNaN(parseInt(p.stock)) ? 0 : p.stock);
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdStock);
+        tbody.appendChild(tr);
+    });
 }
 
 document.getElementById('buscarProductoInput').addEventListener('input', function () {

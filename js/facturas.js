@@ -311,10 +311,29 @@ window.addEventListener('DOMContentLoaded', () => {
             monto: parseFloat(monto)
         });
 
-        // Restar stock
+        // Restar stock y recopilar productos con bajo stock
+        const productosBajoStock = [];
         for (const p of carrito) {
             const nuevoStock = p.stock - p.cantidad;
             await db.collection('productos').doc(p.id).update({ stock: nuevoStock });
+            if (nuevoStock < 5) {
+                productosBajoStock.push({ nombre: p.nombre, stock: nuevoStock });
+            }
+        }
+
+        // Si hay productos en bajo stock, mostrar una sola alerta con la lista
+        if (productosBajoStock.length > 0) {
+            const lista = productosBajoStock.map(x => `${x.nombre} (${x.stock})`).join(', ');
+            alert(`Atención: los siguientes productos tienen bajo stock: ${lista}`);
+        }
+
+        // Intentar actualizar la tabla de bajo stock en la página de productos si la función existe
+        try {
+            if (typeof window.actualizarTablaBajoStock === 'function') {
+                window.actualizarTablaBajoStock();
+            }
+        } catch (e) {
+            console.error('Error llamando a actualizarTablaBajoStock:', e);
         }
 
         document.getElementById('mensaje-factura').textContent = 'Factura guardada correctamente.';
