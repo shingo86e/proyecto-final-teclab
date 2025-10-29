@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras - Productos con Bajo Stock</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module">
+        import { auth } from "./js/firebase.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = "login.html";
+        });
+    </script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+            authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+            projectId: "forrajeriaelsol-44bd0",
+            storageBucket: "forrajeriaelsol-44bd0.appspot.com",
+            messagingSenderId: "312220116385",
+            appId: "1:312220116385:web:42170d02c25545998f97e0",
+            measurementId: "G-TSXDP7G1WD"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script defer src="js/comprar.js"></script>
+</head>
+<body>
+    <header>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <h1 style="display: inline-block; vertical-align: middle;">Lista de Compras</h1>
+                <a href="index.html" title="Inicio" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </a>
+                <a href="productos.html" title="Volver a Productos" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.42-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="comprar-container">
+            <h2>Productos con Bajo Stock (Menos de 5 unidades)</h2>
+            <p>Esta es la lista de productos que necesitan ser reabastecidos:</p>
+            
+            <div id="alertaStock" style="display:none; background-color: #ffeb3b; padding: 10px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #ff9800;">
+                <strong>⚠️ Atención:</strong> Algunos productos tienen stock crítico.
+            </div>
+
+            <!-- Formulario para agregar productos manualmente -->
+            <div class="formulario-agregar" style="background-color: rgba(245, 245, 245, 0.9); padding: 15px; margin: 20px 0; border-radius: 8px; border: 1px solid #ddd;">
+                <h3>➕ Agregar Producto Manual a la Lista</h3>
+                <form id="formAgregarProducto" style="display: flex; gap: 15px; align-items: end; flex-wrap: wrap;">
+                    <div>
+                        <label for="nombreManual">Nombre del Producto:</label>
+                        <input type="text" id="nombreManual" placeholder="Ej: Maíz, Porotos, etc." required style="width: 200px;">
+                    </div>
+                    <div>
+                        <label for="precioManual">Precio de Compra:</label>
+                        <input type="number" id="precioManual" placeholder="0.00" min="0.01" step="0.01" required style="width: 120px;">
+                    </div>
+                    <div>
+                        <label for="cantidadManual">Cantidad:</label>
+                        <input type="number" id="cantidadManual" placeholder="1" min="1" required style="width: 80px;">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-agregar">Agregar a Lista</button>
+                        <button type="button" id="btnLimpiarForm" class="btn-limpiar">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+
+            <table id="tablaComprar" border="1">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock Actual</th>
+                        <th>Estado</th>
+                        <th>Cantidad Sugerida</th>
+                        <th>Precio de Compra</th>
+                        <th>Total Estimado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se agregan dinámicamente -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 10px;">
+                            <button type="button" id="btnCalcular" class="btn-calcular">Calcular Totales</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div id="mensajeVacio" style="display:none; text-align: center; padding: 20px; color: #4caf50;">
+                <h3>🎉 ¡Excelente!</h3>
+                <p>Todos los productos tienen stock suficiente. No hay necesidad de reabastecimiento en este momento.</p>
+            </div>
+
+            <div id="resumenCompra" style="display:none; margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 4px;">
+                <h3>Resumen de Compra</h3>
+                <p><strong>Total de productos a reponer:</strong> <span id="totalProductos">0</span></p>
+                <p><strong>Inversión total estimada:</strong> <span id="totalInversion">$0.00</span></p>
+            </div>
+
+            <div class="botones-accion" style="margin-top: 20px;">
+                <button type="button" id="btnRefrescar" class="btn-registrar">Actualizar Lista</button>
+                <button type="button" id="btnImprimir" class="btn-editar">Imprimir Lista</button>
+                <button type="button" onclick="window.location.href='productos.html'" class="cancelar">Volver a Productos</button>
+            </div>
+
+            <div id="notificacion" class="notificacion-centrada" style="display:none;"></div>
+        </div>
+    </main>
+
+    <script defer src="js/sonido-click.js"></script>
+</body>
+</html>
