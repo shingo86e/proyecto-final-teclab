@@ -18,9 +18,15 @@ document.getElementById('formProducto').addEventListener('submit', async functio
 
     const nombre = document.getElementById('nombreProducto').value.trim();
     const precio = parseFloat(document.getElementById('precioProducto').value);
-    const stock = parseInt(document.getElementById('stockProducto').value) || 0;
+    const stock = parseInt(document.getElementById('stockProducto').value);
 
-    if (nombre && !isNaN(precio)) {
+    // Validar que el stock sea un número válido y mayor a 0
+    if (isNaN(stock) || stock <= 0) {
+        alert('El stock debe ser un número mayor a 0.');
+        return;
+    }
+
+    if (nombre && !isNaN(precio) && precio > 0) {
         try {
             if (productoEditandoId) {
                 // Editar producto existente
@@ -48,7 +54,13 @@ document.getElementById('formProducto').addEventListener('submit', async functio
             alert('Error al guardar el producto: ' + error.message);
         }
     } else {
-        alert('Por favor, completa todos los campos obligatorios.');
+        if (!nombre) {
+            alert('El nombre del producto es obligatorio.');
+        } else if (isNaN(precio) || precio <= 0) {
+            alert('El precio debe ser un número mayor a 0.');
+        } else {
+            alert('Por favor, completa todos los campos correctamente.');
+        }
     }
 });
     
