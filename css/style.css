@@ -623,3 +623,32 @@ a[title="Inicio"]:hover svg {
         font-size: 14px;
     }
 }
+
+/* Estilos para manejo de imágenes */
+#previewImagen img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    margin-top: 10px;
+}
+
+.imagen-producto {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.sin-imagen {
+    width: 60px;
+    height: 60px;
+    background-color: #f5f5f5;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+}

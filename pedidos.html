@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos Online</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- estilos personalizados -->
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module">
+        import { auth } from "./js/firebase.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = "login.html";
+        });
+    </script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAvvcsLskBSfmgBSco3FxrnaNZCd0MJfk",
+            authDomain: "forrajeriaelsol-44bd0.firebaseapp.com",
+            projectId: "forrajeriaelsol-44bd0",
+            storageBucket: "forrajeriaelsol-44bd0.appspot.com",
+            messagingSenderId: "312220116385",
+            appId: "1:312220116385:web:42170d02c25545998f97e0",
+            measurementId: "G-TSXDP7G1WD"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script defer src="js/pedidos.js"></script>
+</head>
+<body>
+    <header>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <h1 style="display: inline-block; vertical-align: middle;">📦 Gestión de Pedidos Online</h1>
+                <a href="index.html" title="Inicio" style="display: inline-block; vertical-align: middle; margin-left: 12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#1976d2" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="row mb-4">
+            <div class="col-12">
+                <p class="text-muted">Administra los pedidos realizados desde el ecommerce</p>
+            </div>
+        </div>
+
+        <!-- Filtros y controles -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="filtroEstado" class="form-label">Filtrar por estado:</label>
+                <select id="filtroEstado" class="form-select">
+                    <option value="">Todos los pedidos</option>
+                    <option value="Pendiente">⏳ Pendiente</option>
+                    <option value="Preparado">✅ Preparado/Listo</option>
+                    <option value="Entregado">📋 Entregado</option>
+                </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+                <button id="actualizarPedidos" class="btn btn-outline-primary">
+                    🔄 Actualizar Pedidos
+                </button>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-center bg-warning text-dark">
+                    <div class="card-body">
+                        <h2 id="pendientesCount" class="card-title">0</h2>
+                        <p class="card-text">Pedidos Pendientes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-success text-white">
+                    <div class="card-body">
+                        <h2 id="preparadosCount" class="card-title">0</h2>
+                        <p class="card-text">Listos para Retirar</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-info text-white">
+                    <div class="card-body">
+                        <h2 id="entregadosCount" class="card-title">0</h2>
+                        <p class="card-text">Entregados Hoy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor de pedidos -->
+        <div id="loadingPedidos" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando pedidos...</span>
+            </div>
+            <p class="mt-2">⏳ Cargando pedidos...</p>
+        </div>
+
+        <div id="noPedidos" class="text-center my-5" style="display: none;">
+            <h3 class="text-muted">📭 No hay pedidos</h3>
+            <p class="text-muted">No se encontraron pedidos con los filtros seleccionados</p>
+        </div>
+
+        <div id="pedidosContainer" class="row">
+            <!-- Los pedidos se cargan dinámicamente aquí -->
+        </div>
+
+        <!-- Notificación -->
+        <div id="notificacion" class="alert alert-success alert-dismissible fade" role="alert" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 1050;">
+            <span id="mensajeNotificacion"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

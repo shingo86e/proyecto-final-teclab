@@ -3,9 +3,23 @@ document.getElementById('btnCancelarProducto').addEventListener('click', functio
     document.getElementById('formProducto').reset();
     document.getElementById('buscarProductoInput').value = '';
     productoEditandoId = null;
+    // Limpiar preview de imagen
+    document.getElementById('previewImagen').innerHTML = '';
     // Limpiar selección de checkboxes
     const checkboxes = document.querySelectorAll('#tablaProductos tbody input[type="checkbox"]');
     checkboxes.forEach(cb => cb.checked = false);
+});
+
+// Event listener para preview de imagen desde URL
+document.getElementById('urlImagen').addEventListener('input', function() {
+    const url = this.value;
+    const preview = document.getElementById('previewImagen');
+    
+    if (url) {
+        preview.innerHTML = `<img src="${url}" alt="Preview" onerror="this.style.display='none'">`;
+    } else {
+        preview.innerHTML = '';
+    }
 });
 // Referencia a Firestore (ya declarada en el HTML)
 
@@ -19,6 +33,7 @@ document.getElementById('formProducto').addEventListener('submit', async functio
     const nombre = document.getElementById('nombreProducto').value.trim();
     const precio = parseFloat(document.getElementById('precioProducto').value);
     const stock = parseInt(document.getElementById('stockProducto').value);
+    const imagenUrl = document.getElementById('urlImagen').value.trim();
 
     // Validar que el stock sea un número válido y mayor a 0
     if (isNaN(stock) || stock <= 0) {
@@ -28,25 +43,28 @@ document.getElementById('formProducto').addEventListener('submit', async functio
 
     if (nombre && !isNaN(precio) && precio > 0) {
         try {
+            const datosProducto = {
+                nombre,
+                precio,
+                stock,
+                imagen: imagenUrl || null
+            };
+            
             if (productoEditandoId) {
                 // Editar producto existente
-                await db.collection('productos').doc(productoEditandoId).update({
-                    nombre,
-                    precio,
-                    stock
-                });
+                await db.collection('productos').doc(productoEditandoId).update(datosProducto);
                 mostrarNotificacion('Producto editado exitosamente.');
                 productoEditandoId = null;
             } else {
                 // Registrar nuevo producto
-                await db.collection('productos').add({
-                    nombre,
-                    precio,
-                    stock
-                });
+                await db.collection('productos').add(datosProducto);
                 mostrarNotificacion('Producto agregado exitosamente.');
             }
+            
+            // Limpiar formulario
             document.getElementById('formProducto').reset();
+            document.getElementById('previewImagen').innerHTML = '';
+            
             // Limpiar selección de checkboxes tras editar o agregar
             const checkboxes = document.querySelectorAll('#tablaProductos tbody input[type="checkbox"]');
             checkboxes.forEach(cb => cb.checked = false);
@@ -82,6 +100,15 @@ document.getElementById('editarProducto').addEventListener('click', function() {
         document.getElementById('nombreProducto').value = producto.nombre;
         document.getElementById('precioProducto').value = producto.precio;
         document.getElementById('stockProducto').value = producto.stock;
+        
+        // Cargar URL de imagen si existe
+        document.getElementById('urlImagen').value = producto.imagen || '';
+        if (producto.imagen) {
+            document.getElementById('previewImagen').innerHTML = `<img src="${producto.imagen}" alt="Preview">`;
+        } else {
+            document.getElementById('previewImagen').innerHTML = '';
+        }
+        
         productoEditandoId = producto.id;
     }
 });
@@ -149,11 +176,20 @@ function actualizarListaProductos() {
         celdaAlerta.classList.remove('has-alert');
     }
 
+    // Columna de imagen
+    const celdaImagen = document.createElement('td');
+    if (producto.imagen) {
+        celdaImagen.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" class="imagen-producto">`;
+    } else {
+        celdaImagen.innerHTML = '<div class="sin-imagen">Sin imagen</div>';
+    }
+
     fila.appendChild(celdaCheckbox);
     fila.appendChild(celdaNombre);
     fila.appendChild(celdaPrecio);
     fila.appendChild(celdaStock);
     fila.appendChild(celdaAlerta);
+    fila.appendChild(celdaImagen);
 
         tablaBody.appendChild(fila);
     });
@@ -243,7 +279,8 @@ db.collection('productos').onSnapshot(snapshot => {
             id: doc.id,
             nombre: data.nombre,
             precio: data.precio,
-            stock: data.stock
+            stock: data.stock,
+            imagen: data.imagen
         });
     });
     actualizarListaProductos();
